@@ -4,6 +4,8 @@
 * prowadzący: mgr inż. Szymon Datko
 * semestr: zimowy 2020/2021
 * język: python
+* PWR, Wydział Elektroniki, Informatyka
+
 
 ## Oceny
 * lab2 - 5.0
