@@ -21,13 +21,23 @@ def compile_shaders():
         #version 330 core
 
         in vec4 position;
-
+        in int gl_InstanceID;
         uniform mat4 M_matrix;
         uniform mat4 V_matrix;
         uniform mat4 P_matrix;
         out vec4 vertex_color;
         void main(void) {
-            gl_Position = P_matrix * V_matrix * M_matrix * position;
+        
+            // next_line symbolizuje kolejne przesuniecia w OY
+            int next_line = int(gl_InstanceID/10); 
+            
+            gl_Position = P_matrix * V_matrix * M_matrix * 
+            ( position + (gl_InstanceID % 10 * vec4(1, 0, 0, 0))
+                       + (next_line * vec4(0, 1, 0, 0))
+            );
+            // (gl_InstanceID % 10 * vec4(1, 0, 0, 0))  ---> przesunięcie w OX
+            // (next_line * vec4(0, 1, 0, 0))           ---> przesunięcie w OY
+            
             vertex_color = vec4(0.9, 0.2, 0.4, 1.0);
         }
     """
@@ -182,19 +192,12 @@ def render(time):
     glUniformMatrix4fv(V_location, 1, GL_FALSE, glm.value_ptr(V_matrix))
     glUniformMatrix4fv(P_location, 1, GL_FALSE, glm.value_ptr(P_matrix))
 
-    # przesunięcie na środek okna
-    M_matrix = glm.translate(M_matrix, glm.vec3(5.0, 5.0, 0.0))
+    # przesunięcie na środek okna - na CPU
+    M_matrix = glm.translate(M_matrix, glm.vec3(-4.0, -4.0, 0.0))
     glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))
 
-    # wyświetlenie planszy 10x10
-    for i in range(10):
-        M_matrix = glm.translate(M_matrix, glm.vec3(-1.0, -10.0, 0.0))
-        glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))
-
-        for j in range(10):
-            M_matrix = glm.translate(M_matrix, glm.vec3(0.0, 1.0, 0.0))
-            glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))
-            glDrawArrays(GL_TRIANGLES, 0, 36)
+    #glDrawArrays(GL_TRIANGLES, 0, 36)
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, 100)
 
 
 def update_viewport(window, width, height):
