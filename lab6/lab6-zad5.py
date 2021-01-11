@@ -27,7 +27,7 @@ att_constant = 1.0
 att_linear = 0.05
 att_quadratic = 0.001
 
-texture_btn_Z = 0
+texture_btn_z = 0
 image1 = Image.open("d7Txtr.tga")
 image2 = Image.open("eggTxtr.tga")
 
@@ -64,9 +64,9 @@ def startup():
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
 
-def setTexture():
+def set_texture():
     # zmiana tekstury - klawisz 'z'
-    if texture_btn_Z:
+    if texture_btn_z:
         img = image1
     else:
         img = image2
@@ -96,7 +96,7 @@ def render(time):
     drawEggTriangles()
 
     # wywolanie funkcji zmieniajacej wyswietlana teksture
-    setTexture()
+    set_texture()
 
     glFlush()
 

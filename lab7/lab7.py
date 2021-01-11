@@ -10,9 +10,11 @@ from OpenGL.GL import *
 from glfw.GLFW import *
 from OpenGL.GLU import *
 
+
 rendering_program = None
 vertex_array_object = None
 vertex_buffer = None
+
 P_matrix = None
 
 
@@ -25,19 +27,19 @@ def compile_shaders():
         uniform mat4 M_matrix;
         uniform mat4 V_matrix;
         uniform mat4 P_matrix;
-        out vec4 vertex_color;
+
         void main(void) {
             gl_Position = P_matrix * V_matrix * M_matrix * position;
-            vertex_color = vec4(0.9, 0.2, 0.4, 1.0);
         }
     """
 
     fragment_shader_source = """
         #version 330 core
-        in vec4 vertex_color;
+
         out vec4 color;
+
         void main(void) {
-            color = vertex_color;
+            color = vec4(0.7, 0.7, 0.7, 1.0);
         }
     """
 
