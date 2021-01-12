@@ -5,7 +5,6 @@ import sys
 import numpy
 import glm
 
-
 from OpenGL.GL import *
 from glfw.GLFW import *
 from OpenGL.GLU import *
@@ -14,19 +13,12 @@ rendering_program = None
 vertex_array_object = None
 vertex_buffer = None
 P_matrix = None
-#############################################
-#               UWAGA, WAŻNE!               #
-# na Windowsie w PyCharm'ie program działa, #
-# ale jak testowałem go na Linuksie to      #
-# już nie ;-(   https://imgur.com/a/IdGnPve #
-#############################################
+
 
 def compile_shaders():
     vertex_shader_source = """
         #version 330 core
-
         in vec4 position;
-        in int gl_InstanceID;
         uniform mat4 M_matrix;
         uniform mat4 V_matrix;
         uniform mat4 P_matrix;
@@ -204,7 +196,7 @@ def render(time):
     M_matrix = glm.translate(M_matrix, glm.vec3(-4.0, -4.0, 0.0))
     glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))
 
-    #glDrawArrays(GL_TRIANGLES, 0, 36)
+    # glDrawArrays(GL_TRIANGLES, 0, 36)
     glDrawArraysInstanced(GL_TRIANGLES, 0, 36, 100)
 
 
