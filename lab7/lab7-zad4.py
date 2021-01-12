@@ -18,11 +18,15 @@ P_matrix = None
 def compile_shaders():
     vertex_shader_source = """
         #version 330 core
+        
         in vec4 position;
+        
         uniform mat4 M_matrix;
         uniform mat4 V_matrix;
         uniform mat4 P_matrix;
+        
         out vec4 vertex_color;
+        
         void main(void) {
         
             // next_line_OY symbolizuje kolejne przesuniecia w OY
