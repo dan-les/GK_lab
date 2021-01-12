@@ -2,13 +2,10 @@
 
 import sys
 
-import numpy
 import glm
-
-
+import numpy
 from OpenGL.GL import *
 from glfw.GLFW import *
-from OpenGL.GLU import *
 
 rendering_program = None
 vertex_array_object = None

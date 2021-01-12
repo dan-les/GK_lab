@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 
 import sys
-
-import numpy
 import glm
-
-
+import numpy
 from OpenGL.GL import *
 from glfw.GLFW import *
-from OpenGL.GLU import *
 
 rendering_program = None
 vertex_array_object = None
@@ -28,7 +24,7 @@ def compile_shaders():
         out vec4 vertex_color;
         void main(void) {
             gl_Position = P_matrix * V_matrix * M_matrix * position;
-            vertex_color = vec4(0.9, 0.2, 0.4, 1.0);
+            vertex_color = vec4(0.7, 0.2, 0.4, 1.0);
         }
     """
 
@@ -186,7 +182,7 @@ def render(time):
     M_matrix = glm.translate(M_matrix, glm.vec3(5.0, 5.0, 0.0))
     glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))
 
-    # wyświetlenie planszy 10x10
+    # wyświetlenie planszy 10 x 10
     for i in range(10):
         M_matrix = glm.translate(M_matrix, glm.vec3(-1.0, -10.0, 0.0))
         glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))

@@ -28,17 +28,20 @@ def compile_shaders():
         out vec4 vertex_color;
         void main(void) {
         
-            // next_line symbolizuje kolejne przesuniecia w OY
-            int next_line = int(gl_InstanceID/10); 
+            // next_line_OY symbolizuje kolejne przesuniecia w OY
+            int next_line_OY = int(gl_InstanceID / 10); 
+            
             
             gl_Position = P_matrix * V_matrix * M_matrix * 
             ( position + (gl_InstanceID % 10 * vec4(1, 0, 0, 0))
-                       + (next_line * vec4(0, 1, 0, 0))
+                       + (next_line_OY * vec4(0, 1, 0, 0))
             );
-            // (gl_InstanceID % 10 * vec4(1, 0, 0, 0))  ---> przesunięcie w OX
-            // (next_line * vec4(0, 1, 0, 0))           ---> przesunięcie w OY
             
-            vertex_color = vec4(0.9, 0.2, 0.4, 1.0);
+            // (gl_InstanceID % 10 * vec4(1, 0, 0, 0))     ---> przesunięcie w OX
+            // (next_line_OY * vec4(0, 1, 0, 0))           ---> przesunięcie w OY
+            
+            
+            vertex_color = vec4(0.5, 0.3, 0.9, 1.0);
         }
     """
 
@@ -178,9 +181,9 @@ def render(time):
     M_matrix = glm.rotate(glm.mat4(1.0), time, glm.vec3(1.0, 1.0, 0.0))
 
     V_matrix = glm.lookAt(
-        glm.vec3(0.0, 0.0, 10.0),
+        glm.vec3(0.0, 0.0, 12.0),
         glm.vec3(0.0, 0.0, 0.0),
-        glm.vec3(0.0, 10.0, 0.0)
+        glm.vec3(0.0, 12.0, 0.0)
     )
 
     glUseProgram(rendering_program)
@@ -192,7 +195,7 @@ def render(time):
     glUniformMatrix4fv(V_location, 1, GL_FALSE, glm.value_ptr(V_matrix))
     glUniformMatrix4fv(P_location, 1, GL_FALSE, glm.value_ptr(P_matrix))
 
-    # przesunięcie na środek okna - na CPU
+    # przesunięcie na środek okna - na CPU (można to pominąć, ale tak ładniej wygląda)
     M_matrix = glm.translate(M_matrix, glm.vec3(-4.0, -4.0, 0.0))
     glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))
 
