@@ -168,9 +168,9 @@ def render(time):
     M_matrix = glm.rotate(glm.mat4(1.0), time, glm.vec3(1.0, 1.0, 0.0))
 
     V_matrix = glm.lookAt(
-        glm.vec3(0.0, 0.0, 10.0),
+        glm.vec3(0.0, 0.0, 13.0),
         glm.vec3(0.0, 0.0, 0.0),
-        glm.vec3(0.0, 10.0, 0.0)
+        glm.vec3(0.0, 13.0, 0.0)
     )
 
     glUseProgram(rendering_program)

@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 
 import sys
-
-import numpy
 import glm
-
-
+import numpy
 from OpenGL.GL import *
 from glfw.GLFW import *
-from OpenGL.GLU import *
 
 rendering_program = None
 vertex_array_object = None
@@ -21,23 +17,28 @@ def compile_shaders():
         #version 330 core
 
         in vec4 position;
+        in vec4 vertex_color_in;
+
+        out vec4 vertex_color;
 
         uniform mat4 M_matrix;
         uniform mat4 V_matrix;
         uniform mat4 P_matrix;
-        out vec4 vertex_color;
+
         void main(void) {
             gl_Position = P_matrix * V_matrix * M_matrix * position;
-            vertex_color = vec4(0.9, 0.2, 0.4, 1.0);
+            vertex_color = vertex_color_in;
         }
     """
 
     fragment_shader_source = """
         #version 330 core
-        in vec4 vertex_color;
+
         out vec4 color;
+        in vec4 vertex_color;
+
         void main(void) {
-            color = vertex_color;
+            color = vertex_color;  
         }
     """
 
@@ -94,61 +95,53 @@ def startup():
     glBindVertexArray(vertex_array_object)
 
     vertex_positions = numpy.array([
-        -0.25, +0.25, -0.25,
-        -0.25, -0.25, -0.25,
-        +0.25, -0.25, -0.25,
-
-        +0.25, -0.25, -0.25,
-        +0.25, +0.25, -0.25,
-        -0.25, +0.25, -0.25,
-
-        +0.25, -0.25, -0.25,
-        +0.25, -0.25, +0.25,
-        +0.25, +0.25, -0.25,
-
-        +0.25, -0.25, +0.25,
-        +0.25, +0.25, +0.25,
-        +0.25, +0.25, -0.25,
-
-        +0.25, -0.25, +0.25,
-        -0.25, -0.25, +0.25,
-        +0.25, +0.25, +0.25,
-
-        -0.25, -0.25, +0.25,
-        -0.25, +0.25, +0.25,
-        +0.25, +0.25, +0.25,
-
-        -0.25, -0.25, +0.25,
-        -0.25, -0.25, -0.25,
-        -0.25, +0.25, +0.25,
-
-        -0.25, -0.25, -0.25,
-        -0.25, +0.25, -0.25,
-        -0.25, +0.25, +0.25,
-
-        -0.25, -0.25, +0.25,
-        +0.25, -0.25, +0.25,
-        +0.25, -0.25, -0.25,
-
-        +0.25, -0.25, -0.25,
-        -0.25, -0.25, -0.25,
-        -0.25, -0.25, +0.25,
-
-        -0.25, +0.25, -0.25,
-        +0.25, +0.25, -0.25,
-        +0.25, +0.25, +0.25,
-
-        +0.25, +0.25, +0.25,
-        -0.25, +0.25, +0.25,
-        -0.25, +0.25, -0.25,
+        -0.25, +0.25, -0.25, -0.25, -0.25, -0.25, +0.25, -0.25, -0.25,
+        +0.25, -0.25, -0.25, +0.25, +0.25, -0.25, -0.25, +0.25, -0.25,
+        +0.25, -0.25, -0.25, +0.25, -0.25, +0.25, +0.25, +0.25, -0.25,
+        +0.25, -0.25, +0.25, +0.25, +0.25, +0.25, +0.25, +0.25, -0.25,
+        +0.25, -0.25, +0.25, -0.25, -0.25, +0.25, +0.25, +0.25, +0.25,
+        -0.25, -0.25, +0.25, -0.25, +0.25, +0.25, +0.25, +0.25, +0.25,
+        -0.25, -0.25, +0.25, -0.25, -0.25, -0.25, -0.25, +0.25, +0.25,
+        -0.25, -0.25, -0.25, -0.25, +0.25, -0.25, -0.25, +0.25, +0.25,
+        -0.25, -0.25, +0.25, +0.25, -0.25, +0.25, +0.25, -0.25, -0.25,
+        +0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, +0.25,
+        -0.25, +0.25, -0.25, +0.25, +0.25, -0.25, +0.25, +0.25, +0.25,
+        +0.25, +0.25, +0.25, -0.25, +0.25, +0.25, -0.25, +0.25, -0.25,
     ], dtype='float32')
 
+    # definiowanie kolorów
+    vertex_colors = numpy.array([
+        0.50, 0.92, 0.92, 0.50, 0.92, 0.92, 0.50, 0.92, 0.92,
+        0.50, 0.92, 0.92, 0.50, 0.92, 0.92, 0.50, 0.92, 0.92,
+
+        1.00, 0.80, 0.43, 1.00, 0.80, 0.43, 1.00, 0.80, 0.43,
+        1.00, 0.80, 0.43, 1.00, 0.80, 0.43, 1.00, 0.80, 0.43,
+
+        0.65, 0.60, 1.00, 0.65, 0.60, 1.00, 0.65, 0.60, 1.00,
+        0.65, 0.60, 1.00, 0.65, 0.60, 1.00, 0.65, 0.60, 1.00,
+
+        0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45,
+        0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45,
+
+        0.91, 0.26, 0.58, 0.91, 0.26, 0.58, 0.91, 0.26, 0.58,
+        0.91, 0.26, 0.58, 0.91, 0.26, 0.58, 0.91, 0.26, 0.58,
+
+        0.88, 0.43, 0.33, 0.88, 0.43, 0.33, 0.88, 0.43, 0.33,
+        0.88, 0.43, 0.33, 0.88, 0.43, 0.33, 0.88, 0.43, 0.33,
+    ], dtype='float32')
+
+    # zadanie zostało rozwiązane poprzez zdefiniowanie nowej tablicy z kolorami (powyżej) oraz bufora danych (poniżej)
     vertex_buffer = glGenBuffers(1)
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer)
     glBufferData(GL_ARRAY_BUFFER, vertex_positions, GL_STATIC_DRAW)
-
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, None)
     glEnableVertexAttribArray(0)
+
+    vertex_buffer_colors = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_colors)
+    glBufferData(GL_ARRAY_BUFFER, vertex_colors, GL_STATIC_DRAW)
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, None)
+    glEnableVertexAttribArray(1)
 
 
 def shutdown():
@@ -168,9 +161,9 @@ def render(time):
     M_matrix = glm.rotate(glm.mat4(1.0), time, glm.vec3(1.0, 1.0, 0.0))
 
     V_matrix = glm.lookAt(
-        glm.vec3(0.0, 0.0, 1.0),
+        glm.vec3(0.0, 0.0, 1.2),
         glm.vec3(0.0, 0.0, 0.0),
-        glm.vec3(0.0, 1.0, 0.0)
+        glm.vec3(0.0, 1.2, 0.0)
     )
 
     glUseProgram(rendering_program)
