@@ -17,7 +17,7 @@ P_matrix = None
 #############################################
 #               UWAGA, WAŻNE!               #
 # na Windowsie w PyCharm'ie program działa, #
-# ale jak testowałem go na linuksie to      #
+# ale jak testowałem go na Linuksie to      #
 # już nie ;-(   https://imgur.com/a/IdGnPve #
 #############################################
 
