@@ -14,7 +14,12 @@ rendering_program = None
 vertex_array_object = None
 vertex_buffer = None
 P_matrix = None
-
+#############################################
+#               UWAGA, WAŻNE!               #
+# na Windowsie w PyCharm'ie program działa, #
+# ale jak testowałem go na linuksie to      #
+# już nie ;-(   https://imgur.com/a/IdGnPve #
+#############################################
 
 def compile_shaders():
     vertex_shader_source = """
