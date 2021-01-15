@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+
 import glm
 import numpy
 from OpenGL.GL import *
@@ -174,6 +175,7 @@ def render(time):
     M_location = glGetUniformLocation(rendering_program, "M_matrix")
     V_location = glGetUniformLocation(rendering_program, "V_matrix")
     P_location = glGetUniformLocation(rendering_program, "P_matrix")
+
     glUniformMatrix4fv(M_location, 1, GL_FALSE, glm.value_ptr(M_matrix))
     glUniformMatrix4fv(V_location, 1, GL_FALSE, glm.value_ptr(V_matrix))
     glUniformMatrix4fv(P_location, 1, GL_FALSE, glm.value_ptr(P_matrix))

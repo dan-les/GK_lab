@@ -2,12 +2,10 @@
 
 import sys
 
-import numpy
 import glm
-
+import numpy
 from OpenGL.GL import *
 from glfw.GLFW import *
-from OpenGL.GLU import *
 
 rendering_program = None
 vertex_array_object = None
@@ -28,21 +26,19 @@ def compile_shaders():
         out vec4 vertex_color;
         
         void main(void) {
-        
             // next_line_OY symbolizuje kolejne przesuniecia w OY
             int next_line_OY = int(gl_InstanceID / 10); 
             
-            
             gl_Position = P_matrix * V_matrix * M_matrix * 
-            ( position + (gl_InstanceID % 10 * vec4(1, 0, 0, 0))
-                       + (next_line_OY * vec4(0, 1, 0, 0))
-            );
+                ( position + (gl_InstanceID % 10 * vec4(1, 0, 0, 0))
+                           + (next_line_OY * vec4(0, 1, 0, 0))
+                );
             
             // (gl_InstanceID % 10 * vec4(1, 0, 0, 0))     ---> przesunięcie w OX
             // (next_line_OY * vec4(0, 1, 0, 0))           ---> przesunięcie w OY
             
             
-            vertex_color = vec4(0.5, 0.3, 0.9, 1.0);
+            vertex_color = vec4(0.5, 0.5, 0.9, 1.0);
         }
     """
 
