@@ -6,12 +6,12 @@
 * PWR, Wydział Elektroniki, Informatyka
 
 
-## Oceny
-* lab2 - 5.0
-* lab3 - 4.95 (Brak ustawienia kolorów na drugim łączeniu)
-* lab4 - 4.45 (zad5 ma zbyt mało wartości dodanej; zła kolejność – najpierw gluLookAt, później wyliczenie wektora Up, powinno być odwrotnie)
-* lab5 - 5.0
-* lab6 - 5.0
-* lab7 - 4.50 (wykonane tylko cztery zadania)
+## Poprawność zadań
+* lab2 - OK
+* lab3 - OK- (Brak ustawienia kolorów na drugim łączeniu)
+* lab4 - OK-- (zad5 ma zbyt mało wartości dodanej; zła kolejność – najpierw gluLookAt, później wyliczenie wektora Up, powinno być odwrotnie)
+* lab5 - OK
+* lab6 - OK
+* lab7 - OK (wykonane tylko cztery zadania)
 
 
