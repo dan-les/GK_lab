@@ -1,7 +1,6 @@
-# GK_lab
+# GK
 ## Zadania z grafiki komputerowej
 * forma zajęć: laboratorium
-* prowadzący: mgr inż. Szymon Datko
 * semestr: zimowy 2020/2021
 * język: python
 * PWR, Wydział Elektroniki, Informatyka
